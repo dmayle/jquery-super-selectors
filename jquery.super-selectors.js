@@ -3,7 +3,7 @@
  * A jQuery plugin enabling better CSS selector support for older browsers
  *  by leveraging jQuery's excellent selectors
  * 
- * Version 0.9
+ * Version 1.0
  * Author: Chris Patterson
  *
  * License: GPL 3 http://www.gnu.org/licenses/gpl-3.0.html

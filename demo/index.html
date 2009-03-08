@@ -10,20 +10,41 @@
 </head>
 <body>
   <div id="header" class="selfclear">
-    <h1>Super Selectors</h1>
+    <h1>jQuery Super Selectors Demo</h1>
     <ul id="nav">
-      <li><a href="#">Curabitur</a></li>
-      <li><a href="#">Donec</a></li>
-      <li><a href="#">Quisque</a></li>
-      <li><a href="#">Vivamus</a></li>
-      <li><a href="#">Aenean</a></li>
+      <li><a href="#">First</a></li>
+      <li><a href="#">Second</a></li>
+      <li><a href="#">Third</a></li>
+      <li><a href="#">Fourth</a></li>
+      <li><a href="#">Fifth</a></li>
     </ul>
   </div><!-- /#header -->
   <div id="main" class="selfclear">
     <div id="copy">
-      <h2>Praesent metus enim</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tincidunt laoreet mauris. Fusce risus. Nullam malesuada. Cras ultricies. Quisque vitae magna consequat metus auctor interdum. Ut ut lectus. Donec felis. Curabitur at orci. Ut sed lectus vel felis posuere congue. Donec elementum massa ut nulla. Nulla neque tellus, mattis ut, vehicula vel, imperdiet vitae, odio. Sed metus leo, pellentesque vitae, aliquet ut, varius ac, ipsum. Sed id odio. Curabitur facilisis. Donec vel ligula. Nunc vel augue a turpis euismod imperdiet. Aliquam interdum, augue sed bibendum egestas, arcu elit dignissim augue, ac commodo arcu sem in ipsum. Aliquam elementum, diam a interdum rhoncus, turpis quam tempor magna, eget ultricies eros dolor vitae augue. Etiam viverra hendrerit arcu. Ut condimentum.</p>
-      <h2>Nunc libero ligula</h2>
+      <h2>What's happening in this demo?</h2>
+      <p>The Super Selectors jQuery plugin scans the page's styles for selectors which aren't supported by all browsers and then adds apropriate classes to elements that those CSS3 selectors are targeting.</p>
+      <h3>For example&hellip;</h3>
+      <p>The following rule is used to remove the left border on the first <code>&lt;li&gt;</code> in the <code>&lt;ul#nav&gt;</code> above:</p>
+      <pre>#nav li:first {
+border-left: 0 none transparent;
+}</pre>
+      <p>However, the <code>:first-child</code> selector is not supported by IE6. Super Selectors remedies this by adding <code>class="first"</code> to the first <code>&lt;li&gt;</code>. And another rule that IE6 will support is declared:</p>
+      <pre>#nav li.first {
+border-left: 0 none transparent;
+}</pre>
+      <h3>Contextual icons&hellip;</h3>
+      <p>CSS3 has the ability to select <code>&lt;a&gt;</code> elements with a particular file extension:</p>
+      <pre>a[href$=".js"] {
+background: url(icons/page_script.png) 0 50% no-repeat;
+}</pre>
+      <p>Some browsers &hellip;*cough* IE6 *cough*&hellip; do not have this ability. That's where Super Selectors steps in and add a class to each <code>&lt;a&gt;</code> that matches the rule. You can see this in action on the source file links below.</p>
+      <pre>a.js  {
+background: url(icons/page_script.png) 0 50% no-repeat;
+}</pre>
+      <h3>Whoa! Look at that :hovercraft&hellip;</h3>
+      <p>Super Selectors even has support for the <code>:hover</code> pseudo-class! Check out the "Source Files" <code>&lt;table&gt;</code> below and the <code>&lt;ul&gt;</code> in the sidebar. Super Selectors adds and removes a <code>class="hover"</code> on the fly. This is particularly useful since IE6 doesn't support <code>:hover</code> classes on elements other than <code>&lt;a&gt;</code></p>
+
+      <h4>Source Files</h4>
       <table>
         <thead>
           <tr>
@@ -94,9 +115,14 @@
     </div>
     <div id="sidebar">
       <ul>
-        <li><a href="#">Ipsum</a></li>
-        <li><a href="#">Fusce</a></li>
-        <li><a href="#">Vestibulum</a></li>
+        <li><a href="#">One</a></li>
+        <li><a href="#">Two</a></li>
+        <li><a href="#">Three</a></li>
+        <li><a href="#">Four</a></li>
+        <li><a href="#">Five</a></li>
+        <li><a href="#">Six</a></li>
+        <li><a href="#">Seven</a></li>
+        <li><a href="#">Eight</a></li>
       </ul>
     </div>
   </div><!-- /#main -->

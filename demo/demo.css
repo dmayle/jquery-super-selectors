@@ -1,7 +1,19 @@
 body {
-background: #fff;
-color: #000;
-font-family: Helvetica, Verdana, sans-serif;
+background: #fbfafa;
+color: #333;
+font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+font-size: 100%;
+text-align: center;
+}
+
+a {
+color: #09c;
+text-decoration: none; 
+}
+
+a:hover,
+a:focus {
+text-decoration: underline; 
 }
 
 /* Self-clearing floats */
@@ -28,26 +40,90 @@ height: 1px;
 /* - */
 
 #header {
-text-align: right;
 width: 60em;
-margin: 0 0 1.5em;
+margin: 0 auto 0.75em;
+text-align: left;
 }
 
 h1 {
+color: #09c;
 font-size: 2.5em;
-float: left;
+font-family: "Clarendon LT Std", "Clarendon Std", "Clarendon", "Century Schoolbook", Georgia, serif;
+letter-spacing: -0.05em;
+line-height: 2.5em;
 margin: 0;
+}
+
+h2 {
+color: #09c;
+font-size: 1.5em;
+font-family: "Clarendon LT Std", "Clarendon Std", "Clarendon", "Century Schoolbook", Georgia, serif;
+letter-spacing: -0.05em;
+line-height: 1.5em;
+margin: 0;
+border-bottom: 1px solid #ddd;
+}
+
+h3 {
+color: #666;
+font-size: 1em;
+line-height: 1em;
+margin: 1.5em 0 0;
+}
+
+h4 {
+color: #09c;
+font-family: "Clarendon LT Std", "Clarendon Std", "Clarendon", "Century Schoolbook", Georgia, serif;
+font-size: 1em;
+line-height: 1em;
+margin: 2em 0 1em 0;
+padding: 2em 0 0 0;
+border-top: 1px solid #ddd;
+}
+
+p {
+font-size: 0.75em;
+line-height: 1.6;
+margin: 1em 0;
+}
+
+strong {
+font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+font-weight: bold;
+}
+
+em {
+font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Arial, Helvetica, sans-serif;
+font-weight: 300;
+}
+
+code {
+font-size: 1em;
+color: #666;
+}
+
+pre {
+font-size: 0.75em;
+line-height: 1.6em;
+color: #666;
+margin-left: 1em;
 }
 
 #nav {
 list-style-type: none;
 margin: 0;
-padding: 1em 0 0;
+padding: 0.5em 0;
+font-size: 0.75em;
+background-color: #f9f9f9;
+border-top: 2px solid #fff;
+border-right: 1px solid #ddd;
+border-bottom: 1px solid #ddd;
+border-left: 2px solid #fff;
 }
 
 #nav li {
 display: inline;
-border-left: 1px solid #222;
+border-left: 1px solid #ddd;
 padding: 0 0.75em;
 }
 
@@ -61,26 +137,27 @@ border-left: 0 none transparent;
 
 #main {
 width: 60em;
+margin: 0 auto 1.5em;
+text-align: left;
 }
 
 #copy {
-width: 66%;
+width: 36.36em;
 float: left;
 font-size: 1.1em;
 line-height: 1.3em;
 }
 
-h2 {
-margin-top: 0;
-}
-
 #sidebar {
-width: 33%;
+width: 20em;
 float: left;
 }
 
 table {
 border-collapse: collapse;
+font-size: 0.75em;
+line-height: 1.5;
+width: 100%;
 }
 
 table tbody tr:nth-child(odd) {
@@ -92,13 +169,20 @@ background: #f3f3f3;
 }
 
 table tbody tr:hover {
-background: #fefefa;
+background: #fff;
 }
 
 table tbody tr.hover {
-background: #fefefa;
+background: #fff;
 }
 
+table th {
+color: #999;
+font-size: 0.875em;
+text-transform: uppercase;
+}
+
+table th,
 table td {
 padding: 0.3em 0.8em;
 }
@@ -106,39 +190,39 @@ padding: 0.3em 0.8em;
 a.file {
 padding: 4px 0 4px 20px;
 display: block;
-background: url(page_white.png) 0 50% no-repeat;
+background: url(./page_white.png) 0 50% no-repeat;
 }
 
 a.file[href$=".png"] {
-background: url(page_picture.png) 0 50% no-repeat;
+background: url(./page_picture.png) 0 50% no-repeat;
 }
 
 a.png  {
-background: url(page_picture.png) 0 50% no-repeat;
+background: url(./page_picture.png) 0 50% no-repeat;
 }
 
 a.file[href$=".html"] {
-background: url(page_html.png) 0 50% no-repeat;
+background: url(./page_html.png) 0 50% no-repeat;
 }
 
 a.html  {
-background: url(page_html.png) 0 50% no-repeat;
+background: url(./page_html.png) 0 50% no-repeat;
 }
 
 a.file[href$=".js"] {
-background: url(page_script.png) 0 50% no-repeat;
+background: url(./page_script.png) 0 50% no-repeat;
 }
 
 a.js  {
-background: url(page_script.png) 0 50% no-repeat;
+background: url(./page_script.png) 0 50% no-repeat;
 }
 
 a.file[href$=".css"] {
-background: url(page_css.png) 0 50% no-repeat;
+background: url(./page_css.png) 0 50% no-repeat;
 }
 
 a.css  {
-background: url(page_css.png) 0 50% no-repeat;
+background: url(./page_css.png) 0 50% no-repeat;
 }
 
 
@@ -161,12 +245,39 @@ background: #f0eeee;
 color: #521302;
 }
 
+#sidebar ul li a:hover {
+background: #fffdfd;
+}
+
 #sidebar ul li:nth-child(odd) a {
 background: #c2f060;
 color: #5d5f2e;
 }
 
+#sidebar ul li:nth-child(odd) a:hover {
+background: #dcff93;
+}
+
 #sidebar ul li.odd a {
 background: #c2f060;
 color: #5d5f2e;
+}
+
+#sidebar ul li.odd a:hover {
+background: #dcff93;
+}
+
+small {
+color: #aaa;
+}
+
+small a {
+color: #aaa;
+text-decoration: underline; 
+}
+
+small a:hover,
+small a:focus {
+color: #444;
+text-decoration: underline; 
 }
