@@ -47,15 +47,21 @@
   }
   
   function getMatches(CSS) {
+    // We need to strip out any comments to make sure we don't apply styles to
+    // commentd out rules
+    CSS = CSS.replace(/\/\*[\s\S]*?\*\//g, '');
   
-    function _match_item(reg, className) {
-      var itemMatch = CSS.replace(/[\n\r]/gi, '').match(reg);
+    function _match_item(reg, className, pattern) {
+      var onelinepattern = pattern.replace(/[\n\r]/gi, '');
+      var itemMatch = onelinepattern.match(reg);
       if(itemMatch) itemMatch=itemMatch.join(", ");
       if(itemMatch) $(itemMatch).addClass(className);
+      return onelinepattern.replace(reg, '$1.'+className);
     }
 
-    function _match_hover(reg, className) {
-      var itemMatch = CSS.replace(/[\n\r]/gi, '').match(reg);
+    function _match_hover(reg, className, pattern) {
+      var onelinepattern = pattern.replace(/[\n\r]/gi, '');
+      var itemMatch = onelinepattern.match(reg);
       if(itemMatch) itemMatch=itemMatch.join(", ");
       if(itemMatch) $(itemMatch).hover(
        function() {
@@ -65,43 +71,55 @@
         $(this).removeClass(className);
        }
       );
+      return onelinepattern.replace(reg, '$1.'+className);
     }
     
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:empty/gi, options.emptyClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:first[^-]/gi, options.firstClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:last[^-]/gi, options.lastClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:nth-child\(odd\)/gi, options.oddClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:nth-child\(even\)/gi, options.evenClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*?\+\s?[a-zA-Z0-9._+~#:-]*/gi, options.nextClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*?\~\s?[a-zA-Z0-9._+~#:-]*/gi, options.siblingClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:first-child/gi, options.firstChildClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:last-child/gi, options.lastChildClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*:only-child/gi, options.onlyChildClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*\>\s?[a-zA-Z0-9._+~#:-]*/gi, options.directChildClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="text"\]/gi, options.textInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="password"\]/gi, options.passwordInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="radio"\]/gi, options.radioInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="checkbox"\]/gi, options.checkboxInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="submit"\]/gi, options.submitInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="image"\]/gi, options.imageInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="reset"\]/gi, options.resetInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="button"\]/gi, options.buttonInputClass);
-    _match_item(/[a-zA-Z0-9._+~#:\s-]*input\[type="file"\]/gi, options.fileInputClass);
+    // This code breaks with @media statements, needs to be fixed to handle
+    // nested curly braces.
+    var CSSpatterns = CSS.split('}');
+    for (var index=0; index<CSSpatterns.length; ++index) {
+      var pattern = CSSpatterns[index] + '}';
+      var rules = pattern.replace(/{([\s\S]*?)}/, '$1');
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):empty/gi, options.emptyClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):first[^-]/gi, options.firstClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):last[^-]/gi, options.lastClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):nth-child\(odd\)/gi, options.oddClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):nth-child\(even\)/gi, options.evenClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):first-child/gi, options.firstChildClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):last-child/gi, options.lastChildClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*):only-child/gi, options.onlyChildClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="text"\]/gi, options.textInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="password"\]/gi, options.passwordInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="radio"\]/gi, options.radioInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="checkbox"\]/gi, options.checkboxInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="submit"\]/gi, options.submitInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="image"\]/gi, options.imageInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="reset"\]/gi, options.resetInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="button"\]/gi, options.buttonInputClass, pattern);
+      pattern = _match_item(/([a-zA-Z0-9._+~#:\s-]*input)\[type="file"\]/gi, options.fileInputClass, pattern);
 
-		// Also add hover listeners as needed
-    _match_hover(/[a-zA-Z0-9._+~#:\s-]*:hover/gi, options.hoverClass);
+      // These super selectors have operators, and so work a bit differently
+      // than the rest.
+      _match_item(/([a-zA-Z0-9._+~#:\s-]*?\+\s?[a-zA-Z0-9._+~#:-]*)/gi, options.nextClass, pattern);
+      _match_item(/([a-zA-Z0-9._+~#:\s-]*?\~\s?[a-zA-Z0-9._+~#:-]*)/gi, options.siblingClass, pattern);
+      _match_item(/([a-zA-Z0-9._+~#:\s-]*\>\s?[a-zA-Z0-9._+~#:-]*)/gi, options.directChildClass, pattern);
+      console.log(pattern);
 
-    // Check for any imports within the passes CSS
-    // Only IE should ever hit this (other browsers 
-    //  will return them within ruleIterator)
-    var importedCSS = CSS.match(/[a-zA-Z0-9\.\-_\+\s]*import([a-zA-Z0-9\.\-_\+\/]*\.css)/gi);
+      // Also add hover listeners as needed
+      _match_hover(/[a-zA-Z0-9._+~#:\s-]*:hover/gi, options.hoverClass, pattern);
 
-    if (importedCSS) {
-      var fakeStyleSheet = [];
-      for (stylesheet=0;stylesheet<importedCSS.length;stylesheet++) {
-        fakeStyleSheet['href'] = importedCSS[stylesheet];
-        getCSS(fakeStyleSheet);
-      }  
+      // Check for any imports within the passes CSS
+      // Only IE should ever hit this (other browsers 
+      //  will return them within ruleIterator)
+      var importedCSS = pattern.match(/[a-zA-Z0-9\.\-_\+\s]*import([a-zA-Z0-9\.\-_\+\/]*\.css)/gi);
+
+      if (importedCSS) {
+        var fakeStyleSheet = [];
+        for (stylesheet=0;stylesheet<importedCSS.length;stylesheet++) {
+          fakeStyleSheet['href'] = importedCSS[stylesheet];
+          getCSS(fakeStyleSheet);
+        }  
+      }
     }
 
   }
